@@ -1,0 +1,26 @@
+
+{
+  "manifest_version": 3,
+  "name": "OmniDL",
+  "version": "0.1.0",
+  "description": "Universal Video Downloader",
+  "permissions": [
+    "webRequest",
+    "downloads",
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "OmniDL",
+    "default_popup": "ui/popup.html"
+  }
+}
