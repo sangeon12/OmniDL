@@ -9,7 +9,10 @@
     "downloads",
     "storage",
     "activeTab",
-    "scripting"
+    "scripting",
+    "debugger",
+    "tabs",
+    "cookies"
   ],
   "host_permissions": [
     "http://*/*",
@@ -22,5 +25,21 @@
   "action": {
     "default_title": "OmniDL",
     "default_popup": "ui/popup.html"
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["media-hook.js"],
+      "run_at": "document_start",
+      "world": "MAIN",
+      "all_frames": true
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["media-monitor.js"],
+      "run_at": "document_start",
+      "world": "ISOLATED",
+      "all_frames": true
+    }
+  ]
 }

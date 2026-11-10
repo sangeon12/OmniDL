@@ -1,7 +1,3 @@
-import "./detector/network.js";
+import { initializeNetwork } from "./networks.js";
 
-// console.log("OmniDL: Background initialized");
-
-// chrome.runtime.onInstalled.addListener(() => {
-//   console.log("OmniDL: Extension installed");
-// });
+console.log("[OmniDL] networks.js 모듈 로드 성공");
