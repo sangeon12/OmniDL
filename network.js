@@ -1,4 +1,8 @@
 
+import { sendYtDlpRequest } from "./native.js";
+import { addVideos } from "./video-store.js";
+
+
 const tabs = new Map();
 const attached = new Set();
 const attaching = new Set();
@@ -119,6 +123,14 @@ async function attachDebugger(tabId) {
 }
 
 function resetState(tabId, pageURL, clearManifests) {
+    console.log("[OmniDL] 매니페스트 초기화 확인", {
+        tabId,
+        pageURL,
+        clearManifests,
+        previousCount: getState(tabId).manifests.length,
+        timestamp: Date.now()
+    });
+
     const state = getState(tabId);
 
     state.pageURL = pageURL;
@@ -210,6 +222,54 @@ async function collectManifest(tabId, requestId, metadata) {
 
         await save(tabId);
 
+        const saveResult = await addVideos([{
+            id: manifest.url,
+            title: `${manifest.type} Manifest`,
+            videoUrl: manifest.url,
+            source: "m3u8dl",
+            manifestType: manifest.type,
+            mimeType: manifest.mimeType,
+            status: manifest.status,
+            responseHeaders: manifest.responseHeaders,
+            body: manifest.body,
+            collectedAt: manifest.collectedAt
+        }]);
+
+        state.manifests = state.manifests.filter(
+            item => item.url !== manifest.url
+        );
+
+        state.updatedAt = Date.now();
+
+        await save(tabId);
+
+        console.log("[OmniDL] 매니페스트 처리 완료", {
+            tabId,
+            url: manifest.url,
+            addedCount: saveResult.addedCount,
+            totalCount: saveResult.totalCount,
+            temporaryCount: state.manifests.length
+        });
+
+        if (index >= 0) {
+            state.manifests[index] = manifest;
+        } else {
+            state.manifests.push(manifest);
+        }
+
+        state.updatedAt = Date.now();
+
+        await save(tabId);
+
+        console.log("[OmniDL] 매니페스트 저장 상태", {
+            tabId,
+            memoryCount: state.manifests.length,
+            storageCount: (
+                await chrome.storage.session.get(`omniDL_${tabId}`)
+            )[`omniDL_${tabId}`]?.manifests?.length ?? 0,
+            timestamp: Date.now()
+        });
+
         console.log("[OmniDL] 매니페스트 수집 성공", {
             tabId,
             type: manifest.type,
@@ -242,20 +302,37 @@ export function initializeNetwork() {
         ["responseHeaders", "extraHeaders"]
     );
 
+    
     chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-        if (changeInfo.status !== "loading") return;
         if (!isWebURL(tab.url)) return;
 
-        resetState(tabId, tab.url, true);
-        attachDebugger(tabId);
-        refreshCookies(tabId, tab.url);
+        if (changeInfo.status === "loading") {
+            resetState(tabId, tab.url, true);
+            attachDebugger(tabId);
+            refreshCookies(tabId, tab.url);
 
-        console.log("[OmniDL] 웹사이트 최초 로드", {
-            tabId,
-            url: tab.url
-        });
+            console.log("[OmniDL] 웹사이트 최초 로드", {
+                tabId,
+                url: tab.url
+            });
+
+            return;
+        }
+
+        if (changeInfo.status === "complete") {
+            const state = getState(tabId);
+
+            if (state.pageURL !== tab.url) return;
+
+            refreshCookies(tabId, tab.url).then(() => {
+                if (tabs.get(tabId) !== state) return;
+
+                //sendYtDlpRequest(tabId, "initial_load", state);
+            });
+        }
     });
 
+    
     chrome.runtime.onMessage.addListener((message, sender) => {
         if (message.type !== "OMNIDL_MEDIA_PLAYING") return;
         if (!sender.tab) return;
@@ -274,6 +351,16 @@ export function initializeNetwork() {
             tabId,
             media: message.data
         });
+
+        setTimeout(async () => {
+            if (tabs.get(tabId) !== state) return;
+
+            await refreshCookies(tabId, message.data.pageURL);
+
+            if (tabs.get(tabId) !== state) return;
+
+            sendYtDlpRequest(tabId, "media_playing", state);
+        }, 1200);
     });
 
     chrome.debugger.onEvent.addListener((source, method, params) => {
@@ -300,6 +387,18 @@ export function initializeNetwork() {
                 mimeType: response.mimeType,
                 status: response.status,
                 headers: response.headers
+            });
+
+            console.log("[OmniDL] 매니페스트 응답 상세", {
+                tabId,
+                requestId: params.requestId,
+                url: response.url,
+                status: response.status,
+                fromDiskCache: response.fromDiskCache,
+                fromServiceWorker: response.fromServiceWorker,
+                fromPrefetchCache: response.fromPrefetchCache,
+                mimeType: response.mimeType,
+                resourceType: params.type
             });
 
             console.log("[OmniDL] 매니페스트 응답 감지", {

@@ -1,3 +1,5 @@
-import { initializeNetwork } from "./networks.js";
+import { initializeNetwork } from "./network.js";
+import { connectCore } from "./native.js";
 
-console.log("[OmniDL] networks.js 모듈 로드 성공");
+initializeNetwork();
+connectCore();

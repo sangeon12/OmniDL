@@ -1,0 +1,2 @@
+/Users/sangeon/Desktop/workspace/OmniDL/OmniDL-Core/publish/OmniDL-Core.pdb
+/Users/sangeon/Desktop/workspace/OmniDL/OmniDL-Core/publish/OmniDL-Core

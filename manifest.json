@@ -12,7 +12,8 @@
     "scripting",
     "debugger",
     "tabs",
-    "cookies"
+    "cookies",
+    "nativeMessaging"
   ],
   "host_permissions": [
     "http://*/*",
