@@ -68,6 +68,60 @@ while (true)
                 $"[OmniDL-Core] 추출 완료: {result.Videos.Count}개"
             );
         }
+
+        if (type == "download")
+        {
+            int requestId = GetInt(root, "requestId");
+            string source = GetString(root, "source");
+        
+            Console.Error.WriteLine(
+                $"[OmniDL-Core] 다운로드 요청 수신: {source}"
+            );
+        
+            if (source != "yt-dlp" && source != "m3u8dl")
+            {
+                await SendAsync(output, new
+                {
+                    type = "download_result",
+                    requestId,
+                    source,
+                    success = false,
+                    filePath = "",
+                    error = "지원하지 않는 다운로드 유형"
+                });
+        
+                continue;
+            }
+        
+            if (!root.TryGetProperty("video", out var video) ||
+                video.ValueKind != JsonValueKind.Object)
+            {
+                await SendAsync(output, new
+                {
+                    type = "download_result",
+                    requestId,
+                    source,
+                    success = false,
+                    filePath = "",
+                    error = "영상 데이터가 없습니다."
+                });
+        
+                continue;
+            }
+        
+            MediaDownloadResult result =
+                await MediaDownloader.DownloadAsync(source, video);
+        
+            await SendAsync(output, new
+            {
+                type = "download_result",
+                requestId,
+                source,
+                success = result.Success,
+                filePath = result.FilePath,
+                error = result.Error
+            });
+        }
     }
     catch (Exception error)
     {

@@ -39,7 +39,7 @@ export function connectCore() {
                 source: "yt-dlp"
             }));
         
-            addVideos(videos).then(result => {
+            addVideos(videos).then(saveResult => {
                 console.log("[OmniDL] yt-dlp 영상 저장 완료", {
                     addedCount: saveResult.addedCount,
                     totalCount: saveResult.totalCount
@@ -52,6 +52,18 @@ export function connectCore() {
         }
 
         console.log("[OmniDL] Core 메시지 수신", message);
+
+        if (message.type === "download_result") {
+            console.log("[OmniDL] 다운로드 결과 수신", {
+                requestId: message.requestId,
+                source: message.source,
+                success: message.success,
+                filePath: message.filePath,
+                error: message.error
+            });
+        
+            return;
+        }
     });
 
     nativePort.onDisconnect.addListener(() => {
@@ -143,3 +155,48 @@ export function sendYtDlpRequest(tabId, reason, state) {
         cookieCount: state.cookies.length
     });
 }
+
+export function sendDownloadRequest(video) {
+    const port = connectCore();
+
+    const requestId = ++requestCounter;
+
+    port.postMessage({
+        type: "download",
+        requestId,
+        source: video.source,
+        video
+    });
+
+    console.log("[OmniDL] 다운로드 요청 송신", {
+        requestId,
+        source: video.source,
+        title: video.title,
+        videoUrl: video.videoUrl,
+        dataKeys: Object.keys(video)
+    });
+
+    return requestId;
+}
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.type !== "OMNIDL_DOWNLOAD_REQUEST") return;
+
+    if (sender.url !== chrome.runtime.getURL("ui/popup.html")) return;
+
+    try {
+        const requestId = sendDownloadRequest(message.video);
+
+        sendResponse({
+            success: true,
+            requestId
+        });
+    } catch (error) {
+        console.error("[OmniDL] 다운로드 요청 송신 실패", error);
+
+        sendResponse({
+            success: false,
+            error: error.message
+        });
+    }
+});

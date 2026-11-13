@@ -25,8 +25,26 @@ async function loadVideos() {
         source.textContent = `유형: ${video.source}`;
         button.textContent = "다운로드";
 
-        button.addEventListener("click", () => {
-            console.log("[OmniDL] 다운로드 버튼 클릭", video);
+        button.addEventListener("click", async () => {
+            try {
+                const response = await chrome.runtime.sendMessage({
+                    type: "OMNIDL_DOWNLOAD_REQUEST",
+                    video
+                });
+            
+                if (!response?.success) {
+                    console.error("[OmniDL] 다운로드 요청 실패", response?.error);
+                    return;
+                }
+            
+                console.log("[OmniDL] 다운로드 요청 전달 완료", {
+                    requestId: response.requestId,
+                    source: video.source,
+                    videoUrl: video.videoUrl
+                });
+            } catch (error) {
+                console.error("[OmniDL] 다운로드 통신 오류", error);
+            }
         });
 
         item.append(title, url, source, button);
