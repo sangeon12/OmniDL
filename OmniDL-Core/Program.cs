@@ -73,11 +73,11 @@ while (true)
         {
             int requestId = GetInt(root, "requestId");
             string source = GetString(root, "source");
-        
+
             Console.Error.WriteLine(
                 $"[OmniDL-Core] 다운로드 요청 수신: {source}"
             );
-        
+
             if (source != "yt-dlp" && source != "m3u8dl")
             {
                 await SendAsync(output, new
@@ -89,10 +89,10 @@ while (true)
                     filePath = "",
                     error = "지원하지 않는 다운로드 유형"
                 });
-        
+
                 continue;
             }
-        
+
             if (!root.TryGetProperty("video", out var video) ||
                 video.ValueKind != JsonValueKind.Object)
             {
@@ -105,13 +105,21 @@ while (true)
                     filePath = "",
                     error = "영상 데이터가 없습니다."
                 });
-        
+
                 continue;
             }
-        
-            MediaDownloadResult result =
-                await MediaDownloader.DownloadAsync(source, video);
-        
+
+            MediaDownloadResult result;
+
+            if (source == "yt-dlp")
+            {
+                result = await MediaDownloader.DownloadAsync(source, video);
+            }
+            else
+            {
+                result = await M3u8Downloader.DownloadAsync(video);
+            }
+
             await SendAsync(output, new
             {
                 type = "download_result",

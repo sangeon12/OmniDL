@@ -1,0 +1,343 @@
+﻿[
+  {
+    "GroupId": "15",
+    "Bandwidth": 4495918,
+    "Codecs": "avc1.4d401e",
+    "Resolution": "720x576",
+    "FrameRate": 25,
+    "Extension": "mp4",
+    "AudioId": "13",
+    "SubtitleId": "0",
+    "PeriodId": "0",
+    "Url": "https://storage.googleapis.com/shaka-demo-assets/angel-one/dash.mpd",
+    "OriginalUrl": "https://storage.googleapis.com/shaka-demo-assets/angel-one/dash.mpd",
+    "Playlist": {
+      "Url": "",
+      "IsLive": false,
+      "RefreshIntervalMs": 30000,
+      "TotalDuration": 60,
+      "MediaParts": [
+        {
+          "MediaSegments": [
+            {
+              "Index": 0,
+              "Duration": 60,
+              "EncryptInfo": {
+                "Method": "NONE"
+              },
+              "IsEncrypted": false,
+              "Url": "https://storage.googleapis.com/shaka-demo-assets/angel-one/video_576p_1.5M_h264.mp4"
+            }
+          ]
+        }
+      ]
+    },
+    "SegmentsCount": 1
+  },
+  {
+    "MediaType": "AUDIO",
+    "GroupId": "13",
+    "Language": "en",
+    "Bandwidth": 130803,
+    "Codecs": "mp4a.40.2",
+    "Channels": "2",
+    "Extension": "mp4",
+    "PeriodId": "0",
+    "Url": "https://storage.googleapis.com/shaka-demo-assets/angel-one/dash.mpd",
+    "OriginalUrl": "https://storage.googleapis.com/shaka-demo-assets/angel-one/dash.mpd",
+    "Playlist": {
+      "Url": "",
+      "IsLive": false,
+      "RefreshIntervalMs": 30000,
+      "TotalDuration": 60,
+      "MediaParts": [
+        {
+          "MediaSegments": [
+            {
+              "Index": 0,
+              "Duration": 60,
+              "EncryptInfo": {
+                "Method": "NONE"
+              },
+              "IsEncrypted": false,
+              "Url": "https://storage.googleapis.com/shaka-demo-assets/angel-one/audio_en_2c_128k_aac.mp4"
+            }
+          ]
+        }
+      ]
+    },
+    "SegmentsCount": 1
+  },
+  {
+    "MediaType": "AUDIO",
+    "GroupId": "23",
+    "Language": "it",
+    "Bandwidth": 130582,
+    "Codecs": "mp4a.40.2",
+    "Channels": "2",
+    "Extension": "mp4",
+    "PeriodId": "0",
+    "Url": "https://storage.googleapis.com/shaka-demo-assets/angel-one/dash.mpd",
+    "OriginalUrl": "https://storage.googleapis.com/shaka-demo-assets/angel-one/dash.mpd",
+    "Playlist": {
+      "Url": "",
+      "IsLive": false,
+      "RefreshIntervalMs": 30000,
+      "TotalDuration": 60,
+      "MediaParts": [
+        {
+          "MediaSegments": [
+            {
+              "Index": 0,
+              "Duration": 60,
+              "EncryptInfo": {
+                "Method": "NONE"
+              },
+              "IsEncrypted": false,
+              "Url": "https://storage.googleapis.com/shaka-demo-assets/angel-one/audio_it_2c_128k_aac.mp4"
+            }
+          ]
+        }
+      ]
+    },
+    "SegmentsCount": 1
+  },
+  {
+    "MediaType": "AUDIO",
+    "GroupId": "19",
+    "Language": "fr",
+    "Bandwidth": 130446,
+    "Codecs": "mp4a.40.2",
+    "Channels": "2",
+    "Extension": "mp4",
+    "PeriodId": "0",
+    "Url": "https://storage.googleapis.com/shaka-demo-assets/angel-one/dash.mpd",
+    "OriginalUrl": "https://storage.googleapis.com/shaka-demo-assets/angel-one/dash.mpd",
+    "Playlist": {
+      "Url": "",
+      "IsLive": false,
+      "RefreshIntervalMs": 30000,
+      "TotalDuration": 60,
+      "MediaParts": [
+        {
+          "MediaSegments": [
+            {
+              "Index": 0,
+              "Duration": 60,
+              "EncryptInfo": {
+                "Method": "NONE"
+              },
+              "IsEncrypted": false,
+              "Url": "https://storage.googleapis.com/shaka-demo-assets/angel-one/audio_fr_2c_128k_aac.mp4"
+            }
+          ]
+        }
+      ]
+    },
+    "SegmentsCount": 1
+  },
+  {
+    "MediaType": "AUDIO",
+    "GroupId": "5",
+    "Language": "de",
+    "Bandwidth": 130432,
+    "Codecs": "mp4a.40.2",
+    "Channels": "2",
+    "Extension": "mp4",
+    "PeriodId": "0",
+    "Url": "https://storage.googleapis.com/shaka-demo-assets/angel-one/dash.mpd",
+    "OriginalUrl": "https://storage.googleapis.com/shaka-demo-assets/angel-one/dash.mpd",
+    "Playlist": {
+      "Url": "",
+      "IsLive": false,
+      "RefreshIntervalMs": 30000,
+      "TotalDuration": 60,
+      "MediaParts": [
+        {
+          "MediaSegments": [
+            {
+              "Index": 0,
+              "Duration": 60,
+              "EncryptInfo": {
+                "Method": "NONE"
+              },
+              "IsEncrypted": false,
+              "Url": "https://storage.googleapis.com/shaka-demo-assets/angel-one/audio_de_2c_128k_aac.mp4"
+            }
+          ]
+        }
+      ]
+    },
+    "SegmentsCount": 1
+  },
+  {
+    "MediaType": "AUDIO",
+    "GroupId": "4",
+    "Language": "es",
+    "Bandwidth": 130405,
+    "Codecs": "mp4a.40.2",
+    "Channels": "2",
+    "Extension": "mp4",
+    "PeriodId": "0",
+    "Url": "https://storage.googleapis.com/shaka-demo-assets/angel-one/dash.mpd",
+    "OriginalUrl": "https://storage.googleapis.com/shaka-demo-assets/angel-one/dash.mpd",
+    "Playlist": {
+      "Url": "",
+      "IsLive": false,
+      "RefreshIntervalMs": 30000,
+      "TotalDuration": 60,
+      "MediaParts": [
+        {
+          "MediaSegments": [
+            {
+              "Index": 0,
+              "Duration": 60,
+              "EncryptInfo": {
+                "Method": "NONE"
+              },
+              "IsEncrypted": false,
+              "Url": "https://storage.googleapis.com/shaka-demo-assets/angel-one/audio_es_2c_128k_aac.mp4"
+            }
+          ]
+        }
+      ]
+    },
+    "SegmentsCount": 1
+  },
+  {
+    "MediaType": "SUBTITLES",
+    "GroupId": "0",
+    "Language": "el",
+    "Bandwidth": 1044,
+    "Codecs": "wvtt",
+    "Extension": "m4s",
+    "Role": "Subtitle",
+    "PeriodId": "0",
+    "Url": "https://storage.googleapis.com/shaka-demo-assets/angel-one/dash.mpd",
+    "OriginalUrl": "https://storage.googleapis.com/shaka-demo-assets/angel-one/dash.mpd",
+    "Playlist": {
+      "Url": "",
+      "IsLive": false,
+      "RefreshIntervalMs": 30000,
+      "TotalDuration": 60,
+      "MediaParts": [
+        {
+          "MediaSegments": [
+            {
+              "Index": 0,
+              "Duration": 60,
+              "EncryptInfo": {
+                "Method": "NONE"
+              },
+              "IsEncrypted": false,
+              "Url": "https://storage.googleapis.com/shaka-demo-assets/angel-one/text_el.mp4"
+            }
+          ]
+        }
+      ]
+    },
+    "SegmentsCount": 1
+  },
+  {
+    "MediaType": "SUBTITLES",
+    "GroupId": "1",
+    "Language": "fr",
+    "Bandwidth": 766,
+    "Codecs": "wvtt",
+    "Extension": "m4s",
+    "Role": "Subtitle",
+    "PeriodId": "0",
+    "Url": "https://storage.googleapis.com/shaka-demo-assets/angel-one/dash.mpd",
+    "OriginalUrl": "https://storage.googleapis.com/shaka-demo-assets/angel-one/dash.mpd",
+    "Playlist": {
+      "Url": "",
+      "IsLive": false,
+      "RefreshIntervalMs": 30000,
+      "TotalDuration": 60,
+      "MediaParts": [
+        {
+          "MediaSegments": [
+            {
+              "Index": 0,
+              "Duration": 60,
+              "EncryptInfo": {
+                "Method": "NONE"
+              },
+              "IsEncrypted": false,
+              "Url": "https://storage.googleapis.com/shaka-demo-assets/angel-one/text_fr.mp4"
+            }
+          ]
+        }
+      ]
+    },
+    "SegmentsCount": 1
+  },
+  {
+    "MediaType": "SUBTITLES",
+    "GroupId": "2",
+    "Language": "en",
+    "Bandwidth": 736,
+    "Codecs": "wvtt",
+    "Extension": "m4s",
+    "Role": "Subtitle",
+    "PeriodId": "0",
+    "Url": "https://storage.googleapis.com/shaka-demo-assets/angel-one/dash.mpd",
+    "OriginalUrl": "https://storage.googleapis.com/shaka-demo-assets/angel-one/dash.mpd",
+    "Playlist": {
+      "Url": "",
+      "IsLive": false,
+      "RefreshIntervalMs": 30000,
+      "TotalDuration": 60,
+      "MediaParts": [
+        {
+          "MediaSegments": [
+            {
+              "Index": 0,
+              "Duration": 60,
+              "EncryptInfo": {
+                "Method": "NONE"
+              },
+              "IsEncrypted": false,
+              "Url": "https://storage.googleapis.com/shaka-demo-assets/angel-one/text_en.mp4"
+            }
+          ]
+        }
+      ]
+    },
+    "SegmentsCount": 1
+  },
+  {
+    "MediaType": "SUBTITLES",
+    "GroupId": "3",
+    "Language": "pt-BR",
+    "Bandwidth": 716,
+    "Codecs": "wvtt",
+    "Extension": "m4s",
+    "Role": "Subtitle",
+    "PeriodId": "0",
+    "Url": "https://storage.googleapis.com/shaka-demo-assets/angel-one/dash.mpd",
+    "OriginalUrl": "https://storage.googleapis.com/shaka-demo-assets/angel-one/dash.mpd",
+    "Playlist": {
+      "Url": "",
+      "IsLive": false,
+      "RefreshIntervalMs": 30000,
+      "TotalDuration": 60,
+      "MediaParts": [
+        {
+          "MediaSegments": [
+            {
+              "Index": 0,
+              "Duration": 60,
+              "EncryptInfo": {
+                "Method": "NONE"
+              },
+              "IsEncrypted": false,
+              "Url": "https://storage.googleapis.com/shaka-demo-assets/angel-one/text_pt-BR.mp4"
+            }
+          ]
+        }
+      ]
+    },
+    "SegmentsCount": 1
+  }
+]
