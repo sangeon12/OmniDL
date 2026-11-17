@@ -190,8 +190,10 @@ public static class M3u8Downloader
         AddArguments(
             info,
             input,
+            //"--select-audio", "lang=^en$:for=best",
             //"--auto-select",
-            "--select-audio", "lang=^en$:for=best",
+            "--select-video", "best",
+            "--select-audio", "all",
             "--no-ansi-color",
             "--no-log",
             "--save-dir", downloadPath,
