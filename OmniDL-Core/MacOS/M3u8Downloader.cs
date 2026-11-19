@@ -48,52 +48,52 @@ public static class M3u8Downloader
                 null
             );
 
-            // if (first.ExitCode != 0 && !string.IsNullOrWhiteSpace(body))
-            // {
-            //     Directory.CreateDirectory(tempPath);
+            if (first.ExitCode != 0 && !string.IsNullOrWhiteSpace(body))
+            {
+                Directory.CreateDirectory(tempPath);
 
-            //     string extension = type.Equals(
-            //         "DASH",
-            //         StringComparison.OrdinalIgnoreCase
-            //     ) ? ".mpd" : ".m3u8";
+                string extension = type.Equals(
+                    "DASH",
+                    StringComparison.OrdinalIgnoreCase
+                ) ? ".mpd" : ".m3u8";
 
-            //     string manifestPath = Path.Combine(
-            //         tempPath,
-            //         "manifest" + extension
-            //     );
+                string manifestPath = Path.Combine(
+                    tempPath,
+                    "manifest" + extension
+                );
 
-            //     await File.WriteAllTextAsync(
-            //         manifestPath,
-            //         body,
-            //         new UTF8Encoding(false)
-            //     );
+                await File.WriteAllTextAsync(
+                    manifestPath,
+                    body,
+                    new UTF8Encoding(false)
+                );
 
-            //     Console.Error.WriteLine(
-            //         "[OmniDL-Core] 원본 매니페스트 본문으로 재시도"
-            //     );
+                Console.Error.WriteLine(
+                    "[OmniDL-Core] 원본 매니페스트 본문으로 재시도"
+                );
 
-            //     var second = await ExecuteAsync(
-            //         executable,
-            //         manifestPath,
-            //         downloadPath,
-            //         saveName,
-            //         url
-            //     );
+                var second = await ExecuteAsync(
+                    executable,
+                    manifestPath,
+                    downloadPath,
+                    saveName,
+                    url
+                );
 
-            //     if (second.ExitCode != 0)
-            //     {
-            //         return new(
-            //             false,
-            //             "",
-            //             "매니페스트 URL: " + Limit(first.Error) +
-            //             " / 매니페스트 본문: " + Limit(second.Error)
-            //         );
-            //     }
-            // }
-            // else if (first.ExitCode != 0)
-            // {
-            //     return new(false, "", Limit(first.Error));
-            // }
+                if (second.ExitCode != 0)
+                {
+                    return new(
+                        false,
+                        "",
+                        "매니페스트 URL: " + Limit(first.Error) +
+                        " / 매니페스트 본문: " + Limit(second.Error)
+                    );
+                }
+            }
+            else if (first.ExitCode != 0)
+            {
+                return new(false, "", Limit(first.Error));
+            }
 
             string[] files = Directory.GetFiles(
                 downloadPath,
@@ -163,8 +163,8 @@ public static class M3u8Downloader
     
         void Log(string message)
         {
-            string line = $"[{DateTime.Now:HH:mm:ss.fff}] {message}";
-            File.AppendAllText(logPath, line + Environment.NewLine);
+            // string line = $"[{DateTime.Now:HH:mm:ss.fff}] {message}";
+            // File.AppendAllText(logPath, line + Environment.NewLine);
         }
     
         Log("========== 다운로드 시작 ==========");

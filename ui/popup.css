@@ -8,3 +8,28 @@ body {
 h1 {
   margin-top: 0;
 }
+
+#video-list {
+  width: 100%;
+  height: 500px;
+  overflow-y: auto;   /* 30px를 넘으면 세로 스크롤바 자동 생성 */
+  overflow-x: hidden; /* 가로 스크롤바 차단 */
+}
+
+/* 세로 스크롤바 디자인 (필요에 따라 색상/두께 조절) */
+#video-list::-webkit-scrollbar {
+  width: 6px; /* 세로 스크롤바 두께 */
+}
+
+#video-list::-webkit-scrollbar-track {
+  background: transparent; /* 트랙 배경 투명 */
+}
+
+#video-list::-webkit-scrollbar-thumb {
+  background: #888; /* 스크롤바 막대 색상 */
+  border-radius: 3px;
+}
+
+#video-list::-webkit-scrollbar-thumb:hover {
+  background: #555; /* 마우스 올렸을 때 색상 */
+}

@@ -4,6 +4,8 @@ using System.Text.Json;
 
 public static class YtDlpDownloader
 {
+    private const string HomebrewBinPath = "/opt/homebrew/bin";
+
     public static async Task<MediaDownloadResult> DownloadAsync(
         string source,
         JsonElement video)
@@ -185,7 +187,7 @@ public static class YtDlpDownloader
             "--no-playlist",
             "--no-warnings",
             "--ffmpeg-location",
-            Path.Combine(AppContext.BaseDirectory, "tools"),
+            HomebrewBinPath,
             "--get-url",
             "--format", "bv+ba/b",
             "--",
@@ -219,9 +221,11 @@ public static class YtDlpDownloader
 
     private static ProcessStartInfo CreateProcessInfo(string name)
     {
+        string executable = FindExecutable(name);
+
         return new ProcessStartInfo
         {
-            FileName = FindExecutable(name),
+            FileName = executable,
             UseShellExecute = false,
             RedirectStandardOutput = true,
             RedirectStandardError = true,
@@ -231,16 +235,22 @@ public static class YtDlpDownloader
 
     private static string FindExecutable(string name)
     {
+        if (name != "yt-dlp" && name != "ffmpeg")
+        {
+            throw new ArgumentException(
+                $"지원하지 않는 실행 파일입니다: {name}"
+            );
+        }
+
         string executable = Path.Combine(
-            AppContext.BaseDirectory,
-            "tools",
+            HomebrewBinPath,
             name
         );
 
         if (!File.Exists(executable))
         {
             throw new FileNotFoundException(
-                $"실행 파일을 찾을 수 없습니다: {executable}"
+                $"Homebrew 실행 파일을 찾을 수 없습니다: {executable}"
             );
         }
 
