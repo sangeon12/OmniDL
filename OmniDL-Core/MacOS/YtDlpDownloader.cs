@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Text.Json;
 
-public static class MediaDownloader
+public static class YtDlpDownloader
 {
     public static async Task<MediaDownloadResult> DownloadAsync(
         string source,
@@ -184,6 +184,8 @@ public static class MediaDownloader
             "--ignore-config",
             "--no-playlist",
             "--no-warnings",
+            "--ffmpeg-location",
+            Path.Combine(AppContext.BaseDirectory, "tools"),
             "--get-url",
             "--format", "bv+ba/b",
             "--",
@@ -217,7 +219,7 @@ public static class MediaDownloader
 
     private static ProcessStartInfo CreateProcessInfo(string name)
     {
-        var info = new ProcessStartInfo
+        return new ProcessStartInfo
         {
             FileName = FindExecutable(name),
             UseShellExecute = false,
@@ -225,42 +227,24 @@ public static class MediaDownloader
             RedirectStandardError = true,
             CreateNoWindow = true
         };
-
-        string currentPath =
-            Environment.GetEnvironmentVariable("PATH") ?? "";
-
-        string extraPath = OperatingSystem.IsWindows()
-            ? ""
-            : "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:";
-
-        info.Environment["PATH"] = extraPath + currentPath;
-
-        return info;
     }
 
     private static string FindExecutable(string name)
     {
-        var candidates = new List<string>();
+        string executable = Path.Combine(
+            AppContext.BaseDirectory,
+            "tools",
+            name
+        );
 
-        if (OperatingSystem.IsWindows())
+        if (!File.Exists(executable))
         {
-            candidates.Add(Path.Combine(
-                AppContext.BaseDirectory,
-                name + ".exe"
-            ));
-        }
-        else
-        {
-            candidates.Add(Path.Combine(
-                AppContext.BaseDirectory,
-                name
-            ));
-
-            candidates.Add("/opt/homebrew/bin/" + name);
-            candidates.Add("/usr/local/bin/" + name);
+            throw new FileNotFoundException(
+                $"실행 파일을 찾을 수 없습니다: {executable}"
+            );
         }
 
-        return candidates.FirstOrDefault(File.Exists) ?? name;
+        return executable;
     }
 
     private static async Task<(int ExitCode, string Stdout, string Stderr)>

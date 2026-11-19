@@ -113,7 +113,7 @@ while (true)
 
             if (source == "yt-dlp")
             {
-                result = await MediaDownloader.DownloadAsync(source, video);
+                result = await YtDlpDownloader.DownloadAsync(source, video);
             }
             else
             {
